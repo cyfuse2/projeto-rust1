@@ -1,9 +1,12 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email inválido').required('Email é obrigatório'),
     password: Yup.string().required('Senha é obrigatória'),
@@ -11,6 +14,14 @@ const Login = () => {
 
   const handleSubmit = (values) => {
     console.log('Login:', values);
+    // Simulação de autenticação bem-sucedida
+    localStorage.setItem('isAuthenticated', 'true');
+    
+    // Disparar um evento de storage para notificar outras partes da aplicação
+    window.dispatchEvent(new Event('storage'));
+    
+    // Navegar para a página inicial
+    navigate('/home');
   };
 
   return (
